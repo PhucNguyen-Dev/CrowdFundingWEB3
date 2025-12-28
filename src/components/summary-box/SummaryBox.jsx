@@ -1,10 +1,9 @@
 import React from 'react'
 import './summary-box.scss';
-import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import { color } from '../../constant';
 import { Line } from 'react-chartjs-2';
 import Box from '../box/Box';
-import { 
+import {
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
@@ -26,6 +25,8 @@ ChartJS.register(
 )
 
 const SummaryBox = ({item}) => {
+  const progressColor = item.percent < 50 ? color.red : color.purple;
+
   return (
     <Box>
             <div className='summary-box'>
@@ -39,18 +40,9 @@ const SummaryBox = ({item}) => {
                     </div>
                 </div>
                 <div className="summary-box__chart">
-                    <CircularProgressbarWithChildren
-                        value={item.percent}
-                        strokeWidth={10}
-                        styles={buildStyles({
-                            pathColor: item.percent < 50 ? color.red : color.purple,
-                            trailColor: 'transparent',
-                            strokeLinecap: 'round'
-                        })}>
-                        <div className="summary-box__chart__value">
-                            {item.percent}%
-                        </div>
-                    </CircularProgressbarWithChildren>
+                    <div className="summary-box__chart__value" style={{ color: progressColor }}>
+                        {item.percent}%
+                    </div>
                 </div>
             </div>
     </Box>
